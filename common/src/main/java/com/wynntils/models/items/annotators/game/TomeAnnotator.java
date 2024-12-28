@@ -15,7 +15,7 @@ import net.minecraft.world.item.Items;
 
 public final class TomeAnnotator implements GameItemAnnotator {
     private static final Pattern TOME_PATTERN = Pattern.compile(
-            "^§[5abcdef]((?<Variant>[\\w']+)? ?Tome of (?<Type>\\w+))( (?<Subtype>.+)( (?<Tier>[IVX]{1,4}))?)?$");
+            "^§[5abcdef](?<Unid>Unidentified )?((?<Variant>[\\w']+)? ?Tome of (?<Type>\\w+))( (?<Subtype>.+)( (?<Tier>[IVX]{1,4}))?)?$");
 
     @Override
     public ItemAnnotation getAnnotation(ItemStack itemStack, StyledText name) {

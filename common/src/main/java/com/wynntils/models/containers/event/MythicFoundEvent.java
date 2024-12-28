@@ -8,19 +8,33 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.Event;
 
 public class MythicFoundEvent extends Event {
-    private final ItemStack mythicBoxItem;
-    private final boolean lootrunEndReward;
+    public enum MythicSource {
+        LOOT_CHEST,
+        LOOTRUN_REWARD_CHEST,
+        RAID_REWARD_CHEST
+    }
 
-    public MythicFoundEvent(ItemStack mythicBoxItem, boolean lootrunEndReward) {
+    private final ItemStack mythicBoxItem;
+    private final MythicSource mythicSource;
+
+    public MythicFoundEvent(ItemStack mythicBoxItem, MythicSource mythicSource) {
         this.mythicBoxItem = mythicBoxItem;
-        this.lootrunEndReward = lootrunEndReward;
+        this.mythicSource = mythicSource;
     }
 
     public ItemStack getMythicBoxItem() {
         return mythicBoxItem;
     }
 
+    public boolean isFromLootChest() {
+        return mythicSource == MythicSource.LOOT_CHEST;
+    }
+
     public boolean isLootrunEndReward() {
-        return lootrunEndReward;
+        return mythicSource == MythicSource.LOOTRUN_REWARD_CHEST;
+    }
+
+    public boolean isRaidEndReward() {
+        return mythicSource == MythicSource.RAID_REWARD_CHEST;
     }
 }

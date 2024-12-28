@@ -72,10 +72,21 @@ public class RewardsModel extends Model {
     public TomeItem fromTomeItemStack(ItemStack itemStack, StyledText name) {
         GearTier gearTier = GearTier.fromStyledText(name);
 
-        TomeInfo tomeInfo = tomeInfoRegistry.getFromDisplayName(name.getStringWithoutFormatting());
+        String tomeName = name.getStringWithoutFormatting();
+        boolean isUnidentified = false;
+        if (tomeName.startsWith("Unidentified ")) {
+            tomeName = tomeName.substring("Unidentified ".length());
+            isUnidentified = true;
+        }
+        TomeInfo tomeInfo = tomeInfoRegistry.getFromDisplayName(tomeName);
         if (tomeInfo == null) {
-            WynntilsMod.warn("Could not find tome info for " + name.getStringWithoutFormatting());
+            WynntilsMod.warn("Could not find tome info for " + name.getStringWithoutFormatting() + " (Originally "
+                    + name.getStringWithoutFormatting() + ")");
             return null;
+        }
+
+        if (isUnidentified) {
+            return new TomeItem(tomeInfo, null);
         }
 
         WynnItemParseResult result = WynnItemParser.parseItemStack(itemStack, tomeInfo.getVariableStatsMap());
