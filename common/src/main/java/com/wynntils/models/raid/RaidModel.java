@@ -152,9 +152,8 @@ public class RaidModel extends Model {
             return;
         }
 
-        // One challenge in Nexus of Light does not display the scoreboard upon
-        // challenge completion
-        // so we have to check for the chat message
+        // One challenge in Nexus of Light does not display the scoreboard upon challenge completion so we have to check
+        // for the chat message
         if (inBuffRoom()) {
             Matcher matcher = event.getOriginalStyledText().stripAlignment().getMatcher(RAID_CHOOSE_BUFF_PATTERN);
             if (matcher.matches()) {
@@ -254,9 +253,7 @@ public class RaidModel extends Model {
 
     @SubscribeEvent
     public void onContainerClose(ContainerCloseEvent.Post event) {
-        if (!rewardChestIsOpened) {
-            return;
-        }
+        if (!rewardChestIsOpened) return;
         expectedRaidRewardChestId = -2; // Reset to null
 
         if (expectedNumRewardPulls == -1 || expectedNumAspectPulls == -1) {
@@ -297,9 +294,7 @@ public class RaidModel extends Model {
     }
 
     private void processAspectItemFind(ItemStack itemStack, int slotId) {
-        if (itemStack.getItem() == Items.AIR) {
-            return;
-        }
+        if (itemStack.getItem() == Items.AIR) return;
 
         Optional<AspectItem> aspectOptional = Models.Item.asWynnItem(itemStack, AspectItem.class);
         if (aspectOptional.isPresent()) {
@@ -317,9 +312,7 @@ public class RaidModel extends Model {
     }
 
     private void processRewardItemFind(ItemStack itemStack, int slotId) {
-        if (itemStack.getItem() == Items.AIR) {
-            return;
-        }
+        if (itemStack.getItem() == Items.AIR) return;
 
         foundNumRewardPulls += 1;
 
@@ -333,6 +326,7 @@ public class RaidModel extends Model {
 
         Optional<EmeraldItem> emeraldOptional = Models.Item.asWynnItem(itemStack, EmeraldItem.class);
         if (emeraldOptional.isPresent()) {
+            // Can track the number of emeralds the player receives for completing the raid
             return;
         }
 
@@ -340,7 +334,6 @@ public class RaidModel extends Model {
         if (tomeItemOptional.isPresent()) {
             TomeItem tomeItem = tomeItemOptional.get();
             if (tomeItem.getGearTier() == GearTier.MYTHIC) {
-                // Assuming only possible mythics are tomes
                 foundMythicTome = true;
                 WynntilsMod.postEvent(new MythicFoundEvent(itemStack, MythicFoundEvent.MythicSource.RAID_REWARD_CHEST));
             }
@@ -361,16 +354,11 @@ public class RaidModel extends Model {
         }
     }
 
-    // Since all challenges use a different instructions message the easiest way to
-    // check for a challenge
-    // beginning is from the scoreboard not showing any of the static messages and
-    // being in an instructions room.
-    // At the time of making this there is no consistent way to check for entering a
-    // boss fight either, so if we
-    // are in the boss intermission and this is called, then we have entered the
-    // boss fight.
-    // So this method will be called when no other patterns matched the first line
-    // of the raid scoreboard segment.
+    // Since all challenges use a different instructions message the easiest way to check for a challenge
+    // beginning is from the scoreboard not showing any of the static messages and being in an instructions room.
+    // At the time of making this there is no consistent way to check for entering a boss fight either, so if we
+    // are in the boss intermission and this is called, then we have entered the boss fight.
+    // So this method will be called when no other patterns matched the first line of the raid scoreboard segment.
     public void tryStartChallenge() {
         if (inInstructionsRoom()) {
             currentRoom = RaidRoomType.values()[currentRoom.ordinal() + 1];
@@ -379,10 +367,8 @@ public class RaidModel extends Model {
         }
     }
 
-    // This will only end the timer for the current room, but we are still in the
-    // room so currentRoom isn't updated.
-    // It will be called multiple times after completing a challenge so we use
-    // completedCurrentChallenge to only
+    // This will only end the timer for the current room, but we are still in the room so currentRoom isn't updated.
+    // It will be called multiple times after completing a challenge so we use completedCurrentChallenge to only
     // post the event and save timers once.
     public void completeChallenge() {
         if (!completedCurrentChallenge) {
@@ -396,12 +382,10 @@ public class RaidModel extends Model {
         }
     }
 
-    // Only check for entry to a buff room once after the challenge has been
-    // completed.
+    // Only check for entry to a buff room once after the challenge has been completed.
     public void enterBuffRoom() {
         if (completedCurrentChallenge) {
-            // We put the damage dealt here instead of in completeChallenge as you are still
-            // in
+            // We put the damage dealt here instead of in completeChallenge as you are still in
             // the challenge room and can deal damage until you enter the buff room
             roomDamages.put(currentRoom, currentRoomDamage);
             currentRoomDamage = 0;
@@ -421,9 +405,7 @@ public class RaidModel extends Model {
     }
 
     public void completeRaid() {
-        if (currentRaid == null) {
-            return;
-        }
+        if (currentRaid == null) return;
 
         // Add the boss time to room timers
         long bossTime = System.currentTimeMillis() - roomStartTime;
@@ -449,9 +431,7 @@ public class RaidModel extends Model {
     }
 
     public void failedRaid() {
-        if (currentRaid == null) {
-            return;
-        }
+        if (currentRaid == null) return;
 
         WynntilsMod.postEvent(new RaidEndedEvent.Failed(currentRaid, getAllRoomTimes(), currentRaidTime()));
 
@@ -491,26 +471,20 @@ public class RaidModel extends Model {
     }
 
     public List<String> getRaidMajorIds(String playerName) {
-        if (!partyRaidBuffs.containsKey(playerName)) {
-            return List.of();
-        }
+        if (!partyRaidBuffs.containsKey(playerName)) return List.of();
 
         List<String> rawBuffNames = partyRaidBuffs.get(playerName);
         List<String> majorIds = new ArrayList<>();
 
         for (String rawBuffName : rawBuffNames) {
             String[] buffParts = rawBuffName.split(" ");
-            if (buffParts.length < 2) {
-                continue;
-            }
+            if (buffParts.length < 2) continue;
 
             String buffName = buffParts[0];
             int buffTier = MathUtils.integerFromRoman(buffParts[1]);
 
             String majorId = this.currentRaid.majorIdFromBuff(buffName, buffTier);
-            if (majorId == null) {
-                continue;
-            }
+            if (majorId == null) continue;
 
             majorIds.add(majorId);
         }

@@ -112,21 +112,15 @@ public final class LootChestModel extends Model {
 
     @SubscribeEvent
     public void onSetSlot(ContainerSetSlotEvent.Post event) {
-        if (event.getContainerId() != nextExpectedLootContainerId) {
-            return;
-        }
-        if (event.getSlot() >= LOOT_CHEST_ITEM_COUNT) {
-            return;
-        }
+        if (event.getContainerId() != nextExpectedLootContainerId) return;
+        if (event.getSlot() >= LOOT_CHEST_ITEM_COUNT) return;
 
         ItemStack itemStack = event.getItemStack();
 
         processItemFind(itemStack);
 
         Optional<GearBoxItem> gearBoxItem = Models.Item.asWynnItem(itemStack, GearBoxItem.class);
-        if (gearBoxItem.isEmpty()) {
-            return;
-        }
+        if (gearBoxItem.isEmpty()) return;
 
         GearBoxItem gearBox = gearBoxItem.get();
         if (gearBox.getGearTier() == GearTier.MYTHIC) {

@@ -55,7 +55,7 @@ public final class StatisticsCollectors {
     public void onMythicFoundEvent(MythicFoundEvent event) {
         Services.Statistics.increaseStatistics(StatisticKind.MYTHICS_FOUND);
 
-        if (event.isLootrunEndReward()) {
+        if (event.getMythicSource() == MythicFoundEvent.MythicSource.LOOTRUN_REWARD_CHEST) {
             Services.Statistics.addToStatistics(
                     StatisticKind.LOOTRUNS_PULLS_WITHOUT_MYTHIC, Models.Lootrun.dryPulls.get());
         }

@@ -56,7 +56,7 @@ public class MythicFoundFeature extends Feature {
 
         if (playSound.get() || showDryStreakMessage.get()) {
             // Normal loot chest reward
-            if (event.isFromLootChest()) {
+            if (event.getMythicSource() == MythicFoundEvent.MythicSource.LOOT_CHEST) {
                 Optional<GearBoxItem> gearBoxItem = Models.Item.asWynnItem(itemStack, GearBoxItem.class);
                 if (gearBoxItem.isPresent()) {
                     if (gearBoxItem.get().getGearType() != GearType.MASTERY_TOME) {
@@ -64,9 +64,7 @@ public class MythicFoundFeature extends Feature {
                             McUtils.playSoundAmbient(chestSound.get().getSoundEvent());
                         }
 
-                        if (!showDryStreakMessage.get()) {
-                            return;
-                        }
+                        if (!showDryStreakMessage.get()) return;
                         sendNormalDryStreakMessage(StyledText.fromComponent(
                                 event.getMythicBoxItem().getHoverName()));
                     }
@@ -75,7 +73,7 @@ public class MythicFoundFeature extends Feature {
             }
 
             // Lootrun rewards
-            if (event.isLootrunEndReward()) {
+            if (event.getMythicSource() == MythicFoundEvent.MythicSource.LOOTRUN_REWARD_CHEST) {
                 boolean validLootrunMythic = false;
                 Optional<GearItem> gearItem = Models.Item.asWynnItem(itemStack, GearItem.class);
                 if (gearItem.isPresent()) {
@@ -97,9 +95,7 @@ public class MythicFoundFeature extends Feature {
                         McUtils.playSoundAmbient(lootrunSound.get().getSoundEvent());
                     }
 
-                    if (!showDryStreakMessage.get()) {
-                        return;
-                    }
+                    if (!showDryStreakMessage.get()) return;
                     sendLootrunDryStreakMessage(
                             StyledText.fromComponent(event.getMythicBoxItem().getHoverName()));
                 }
@@ -107,7 +103,7 @@ public class MythicFoundFeature extends Feature {
         }
 
         // Raid rewards
-        if (event.isRaidEndReward()) {
+        if (event.getMythicSource() == MythicFoundEvent.MythicSource.RAID_REWARD_CHEST) {
             if (showAspectDryStreakMessage.get()) {
                 Optional<AspectItem> aspectItem = Models.Item.asWynnItem(itemStack, AspectItem.class);
                 if (aspectItem.isPresent()) {
