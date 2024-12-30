@@ -172,12 +172,14 @@ public class MythicFoundFeature extends Feature {
                 .append(itemName.getComponent())
                 .append(Component.literal(" after ")
                         .withStyle(ChatFormatting.LIGHT_PURPLE)
-                        .append(Component.literal(String.valueOf(Models.Raid.getNumRaidsWithoutMythicAspect()))
-                                .withStyle(ChatFormatting.DARK_PURPLE)))
-                .append(Component.literal(" dry raids and "))
-                .append(Component.literal(String.valueOf(Models.Raid.getNumAspectPullsWithoutMythicAspect()))
-                        .withStyle(ChatFormatting.DARK_PURPLE))
-                .append(Component.literal(" dry aspect pulls.")));
+                        .append(Component.literal(
+                                        String.valueOf(Models.Raid.getNumRaidsWithoutMythicAspect()) + " raids")
+                                .withStyle(ChatFormatting.GOLD)))
+                .append(Component.literal(" and ").withStyle(ChatFormatting.LIGHT_PURPLE))
+                .append(Component.literal(
+                                String.valueOf(Models.Raid.getNumAspectPullsWithoutMythicAspect()) + " aspect pulls")
+                        .withStyle(ChatFormatting.GOLD))
+                .append(Component.literal(" without a mythic.").withStyle(ChatFormatting.LIGHT_PURPLE)));
     }
 
     private static void sendTomeDryStreakMessage(StyledText itemName) {
@@ -186,12 +188,14 @@ public class MythicFoundFeature extends Feature {
                 .append(itemName.getComponent())
                 .append(Component.literal(" after ")
                         .withStyle(ChatFormatting.LIGHT_PURPLE)
-                        .append(Component.literal(String.valueOf(Models.Raid.getNumRaidsWithoutMythicTome()))
-                                .withStyle(ChatFormatting.DARK_PURPLE)))
-                .append(Component.literal(" dry raids and "))
-                .append(Component.literal(String.valueOf(Models.Raid.getNumRewardPullsWithoutMythicTome()))
-                        .withStyle(ChatFormatting.DARK_PURPLE))
-                .append(Component.literal(" dry reward pulls.")));
+                        .append(Component.literal(String.valueOf(Models.Raid.getNumRaidsWithoutMythicTome()) + " raids")
+                                .withStyle(ChatFormatting.GOLD)))
+                .append(Component.literal(" and ").withStyle(ChatFormatting.LIGHT_PURPLE))
+                .append(Component.literal(
+                                String.valueOf(Models.Raid.getNumRewardPullsWithoutMythicTome()) + " reward pulls")
+                        .withStyle(ChatFormatting.GOLD))
+                .append(Component.literal(" without a mythic."))
+                .withStyle(ChatFormatting.LIGHT_PURPLE));
     }
 
     private enum MythicSound {
