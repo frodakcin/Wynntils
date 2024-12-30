@@ -51,7 +51,7 @@ public class MythicFoundFeature extends Feature {
     public final Config<Boolean> showAspectDryStreakMessage = new Config<>(true);
 
     @Persisted
-    public final Config<Boolean> showTomeDryStreakMessage = new Config<>(true);
+    public final Config<Boolean> showTomeDryStreakMessage = new Config<>(false);
 
     @SubscribeEvent
     public void onMythicFound(MythicFoundEvent event) {
