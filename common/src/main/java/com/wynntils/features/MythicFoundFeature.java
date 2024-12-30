@@ -42,6 +42,9 @@ public class MythicFoundFeature extends Feature {
     private final Config<MythicSound> lootrunSound = new Config<>(MythicSound.MODERN);
 
     @Persisted
+    private final Config<MythicSound> raidSound = new Config<>(MythicSound.MODERN);
+
+    @Persisted
     public final Config<Boolean> showDryStreakMessage = new Config<>(true);
 
     @Persisted
@@ -104,20 +107,30 @@ public class MythicFoundFeature extends Feature {
 
         // Raid rewards
         if (event.getMythicSource() == MythicFoundEvent.MythicSource.RAID_REWARD_CHEST) {
-            if (showAspectDryStreakMessage.get()) {
+            if (showAspectDryStreakMessage.get() || playSound.get()) {
                 Optional<AspectItem> aspectItem = Models.Item.asWynnItem(itemStack, AspectItem.class);
                 if (aspectItem.isPresent()) {
-                    sendAspectDryStreakMessage(
-                            StyledText.fromComponent(event.getMythicBoxItem().getHoverName()));
+                    if (playSound.get()) {
+                        McUtils.playSoundAmbient(raidSound.get().getSoundEvent());
+                    }
+                    if (showAspectDryStreakMessage.get()) {
+                        sendAspectDryStreakMessage(StyledText.fromComponent(
+                                event.getMythicBoxItem().getHoverName()));
+                    }
                     return;
                 }
             }
 
-            if (showTomeDryStreakMessage.get()) {
+            if (showTomeDryStreakMessage.get() || playSound.get()) {
                 Optional<TomeItem> tomeItem = Models.Item.asWynnItem(itemStack, TomeItem.class);
                 if (tomeItem.isPresent()) {
-                    sendTomeDryStreakMessage(
-                            StyledText.fromComponent(event.getMythicBoxItem().getHoverName()));
+                    if (playSound.get()) {
+                        McUtils.playSoundAmbient(raidSound.get().getSoundEvent());
+                    }
+                    if (showTomeDryStreakMessage.get()) {
+                        sendTomeDryStreakMessage(StyledText.fromComponent(
+                                event.getMythicBoxItem().getHoverName()));
+                    }
                     return;
                 }
             }

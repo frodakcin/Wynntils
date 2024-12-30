@@ -1079,6 +1079,8 @@
   "feature.wynntils.mythicFound.name": "Mythic Found",
   "feature.wynntils.mythicFound.playSound.description": "Should a sound be played when a mythic item is found?",
   "feature.wynntils.mythicFound.playSound.name": "Play Sound",
+  "feature.wynntils.mythicFound.raidSound.description": "What sound should be played upon finding a mythic in the raid reward chest?",
+  "feature.wynntils.mythicFound.raidSound.name": "Raid Sound",
   "feature.wynntils.mythicFound.showAspectDryStreakMessage.description": "Should a message be displayed when a mythic aspect is found after a dry streak?",
   "feature.wynntils.mythicFound.showAspectDryStreakMessage.name": "Show Mythic Aspect Dry Streak Message",
   "feature.wynntils.mythicFound.showDryStreakMessage.description": "Should a message be displayed when a mythic item is found after a dry streak?",
