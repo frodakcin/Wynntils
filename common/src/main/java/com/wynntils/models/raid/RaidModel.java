@@ -152,8 +152,6 @@ public class RaidModel extends Model {
             return;
         }
 
-        // One challenge in Nexus of Light does not display the scoreboard upon challenge completion so we have to check
-        // for the chat message
         if (inBuffRoom()) {
             Matcher matcher = event.getOriginalStyledText().stripAlignment().getMatcher(RAID_CHOOSE_BUFF_PATTERN);
             if (matcher.matches()) {
@@ -175,6 +173,8 @@ public class RaidModel extends Model {
 
         if (!inChallengeRoom()) return;
 
+        // One challenge in Nexus of Light does not display the scoreboard upon challenge completion so we have to check
+        // for the chat message
         if (event.getStyledText().matches(CHALLENGE_COMPLETED_PATTERN)) {
             completeChallenge();
         }
