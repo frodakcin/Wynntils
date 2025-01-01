@@ -8,7 +8,7 @@ import com.wynntils.models.containers.Container;
 import java.util.regex.Pattern;
 
 public class RaidRewardChestContainer extends Container {
-    private static final Pattern TITLE_PATTERN = Pattern.compile("󏿪");
+    private static final Pattern TITLE_PATTERN = Pattern.compile("\uDAFF\uDFEA\uE00E");
 
     public RaidRewardChestContainer() {
         super(TITLE_PATTERN);
