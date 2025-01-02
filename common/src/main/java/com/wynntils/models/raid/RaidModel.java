@@ -23,6 +23,7 @@ import com.wynntils.models.gear.type.GearTier;
 import com.wynntils.models.items.items.game.AspectItem;
 import com.wynntils.models.items.items.game.EmeraldItem;
 import com.wynntils.models.items.items.game.TomeItem;
+import com.wynntils.models.combat.type.DamageDealtEvent;
 import com.wynntils.models.raid.event.RaidChallengeEvent;
 import com.wynntils.models.raid.event.RaidEndedEvent;
 import com.wynntils.models.raid.event.RaidNewBestTimeEvent;
