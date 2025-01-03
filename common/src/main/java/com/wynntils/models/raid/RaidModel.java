@@ -19,7 +19,6 @@ import com.wynntils.mc.event.TitleSetTextEvent;
 import com.wynntils.models.combat.type.DamageDealtEvent;
 import com.wynntils.models.containers.containers.RaidRewardChestContainer;
 import com.wynntils.models.containers.event.MythicFoundEvent;
-import com.wynntils.models.damage.type.DamageDealtEvent;
 import com.wynntils.models.gear.type.GearTier;
 import com.wynntils.models.items.items.game.AspectItem;
 import com.wynntils.models.items.items.game.EmeraldItem;
