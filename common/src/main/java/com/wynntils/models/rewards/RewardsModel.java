@@ -69,19 +69,13 @@ public class RewardsModel extends Model {
         return new CharmItem(charmInfo, CharmInstance.create(result.rerolls(), charmInfo, result.identifications()));
     }
 
-    public TomeItem fromTomeItemStack(ItemStack itemStack, StyledText name) {
+    public TomeItem fromTomeItemStack(ItemStack itemStack, StyledText name, String tomeName, boolean isUnidentified) {
         GearTier gearTier = GearTier.fromStyledText(name);
 
-        String tomeName = name.getStringWithoutFormatting();
-        boolean isUnidentified = false;
-        if (tomeName.startsWith("Unidentified ")) {
-            tomeName = tomeName.substring("Unidentified ".length());
-            isUnidentified = true;
-        }
         TomeInfo tomeInfo = tomeInfoRegistry.getFromDisplayName(tomeName);
         if (tomeInfo == null) {
-            WynntilsMod.warn("Could not find tome info for " + name.getStringWithoutFormatting() + " (Originally "
-                    + name.getStringWithoutFormatting() + ")");
+            WynntilsMod.warn("Could not find tome info for " + tomeName + " (Originally "
+                    + StyledText.fromComponent(itemStack.getHoverName()).getStringWithoutFormatting() + ")");
             return null;
         }
 
