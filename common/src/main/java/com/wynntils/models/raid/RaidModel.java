@@ -144,6 +144,7 @@ public class RaidModel extends Model {
         Matcher rewardPullMatcher = styledText.getMatcher(REWARD_PULLS_PATTERN);
         if (rewardPullMatcher.find()) {
             expectedNumRewardPulls = Integer.parseInt(rewardPullMatcher.group(1));
+            hasProcessedRewards = false;
             return;
         }
         Matcher aspectPullMatcher = styledText.getMatcher(ASPECT_PULLS_PATTERN);
@@ -212,8 +213,6 @@ public class RaidModel extends Model {
     public void onScreenInit(ScreenInitEvent.Pre e) {
         if (Models.Container.getCurrentContainer() instanceof RaidRewardChestContainer raidRewardChest) {
             expectedRaidRewardChestId = raidRewardChest.getContainerId();
-            rewardChestIsOpened = true;
-            hasProcessedRewards = false;
         } else {
             expectedRaidRewardChestId = -2;
         }
@@ -222,6 +221,7 @@ public class RaidModel extends Model {
     @SubscribeEvent
     public void onSetContent(ContainerSetContentEvent.Post event) {
         if (event.getContainerId() != expectedRaidRewardChestId) return;
+        rewardChestIsOpened = true;
 
         if (hasProcessedRewards) {
             /* Can include logic to handle scrolling through received aspects */
